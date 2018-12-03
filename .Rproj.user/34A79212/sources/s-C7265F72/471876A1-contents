@@ -1,0 +1,26 @@
+---
+output:
+  github_document:
+    html_preview: false
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
+
+
+## Overview
+
+`"roller"` is a minimal [R](http://www.r-project.org/) package 
+that provides functions to simulate tossing a coin.
+
+* `device()` creates a coin object (of class `"device"`)
+* `roll()` tosses a coin object, producing a `"roll"` object.
+* `plot()` method for a `"roll"` object to plot frequencies of heads.
+* `summary()` method for a `"roll"` object (of class `"summary.rolls"`)

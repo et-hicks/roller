@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1543798916147.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3423295446",
+    "id" : "D746F9B",
+    "lastKnownWriteTime" : 1543649298,
+    "last_content_update" : 1543649298,
+    "path" : "~/roller/R/roller.R",
+    "project_path" : "R/roller.R",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

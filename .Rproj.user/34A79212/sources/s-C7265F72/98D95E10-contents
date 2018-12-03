@@ -1,0 +1,15 @@
+---
+title: "Beginning with Roller"
+author: "Ethan Hicks"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to cointoss}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+Suggests:
+  testthat, 
+  knitr, 
+  rmkarkdown
+VignetteBuilder: knitr
+---

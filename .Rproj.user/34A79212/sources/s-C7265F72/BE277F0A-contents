@@ -1,0 +1,125 @@
+---
+title: "Introduction to Roller"
+author: "Ethan Hicks"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to cointoss}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(roller)
+```
+
+## Roller
+
+`roller` is, at its core, a statistical modeling package for rolling an `n` sided die `t` times. The package creates three new classes, with the main two being `"device"` and `"rolls"` ( the third is a byproduct of the summary method: `"summary.rolls"`). In the package, there is an implementation for a plotting method for any `R` object with class `"rolls"`
+
+## First device
+
+The default of the device is a fair two-sided object, akin to a real life coin. The first step would be to create the object and inspect it a little:
+
+```{r}
+basic_device <- device()
+basic_device
+```
+
+One can access the probability or sides of the device with the `$` operator, giving back a vector of those objects:
+
+```{r}
+basic_device$sides
+basic_device$prob
+```
+
+The `"device"` class is versatile in these two characteristics, `"sides"` and `"prob"`, in that the vector fed into `"prob"` can be of any length, but must both sum to one (as is common in probability), and must be a numeric vector with more than one item.
+
+```{r}
+# create an unfair object
+loaded_die <- device(prob = c(.8, .2))
+loaded_die
+
+# create a coin
+irish_euro <- device(sides = c("continent", "harp"))
+
+# normal six sided die
+die <- device(sides = 1:6, prob = rep(1/6, 6))
+```
+
+Now that we have some devices to roll, lets get them rolling
+
+## Rolling
+
+With some devices in hand, we can begin to do some modeling with them:
+
+```{r}
+loaded_roll50 <- roll(device = loaded_die, times = 50)
+loaded_roll50
+
+euro_roll50 <- roll(device = irish_euro, times = 50)
+euro_roll50
+
+die_roll100 <- roll(device = die, times = 100)
+die_roll100
+```
+
+The newly created `rolls` objects are comprehensive in their informaion:
+
+```{r}
+names(die_roll100)
+die_roll100$rolls
+die_roll100$sides
+die_roll100$prob
+die_roll100$total
+```
+
+As you can see, each name returns a vector of properties inherent to the rolls of the device. 
+
+If, after some modeling, you realize that you do not have enough data to accomplish your tasks, their is a built in method to add more rolls without changing the device, or mutating the previous rolls:
+
+```{r}
+euro_roll50
+
+euro_roll150 <- euro_roll50 + 100
+euro_roll150
+
+euro_roll50$rolls == euro_roll150$rolls[c(1:50)]
+```
+
+IF you find that you do not like the results of one roll, you can change it, but you can only change it to another side (i.e. you cannot have a dice with sides 1,2, 3, 4, 5, 6 have a roll changed to a 7):
+
+```{r}
+euro_roll50
+euro_roll50[1]
+euro_roll50[1] <- "continent"
+euro_roll50[1]
+euro_roll50 # Notice the different initial value
+```
+
+## Summarizing the Model
+
+With the many rolls on hand, it would be nice to have a concise way to veiw the results. Luckily there are two options, both of them built into R itselt: `plot` and `summary`(This is also when the little used class `"summary.rolls"` comes into play):
+
+```{r}
+die_roll100_sum <- summary(die_roll100)
+names(die_roll100_sum)
+class(die_roll100_sum)
+names(die_roll100_sum$freqs)
+die_roll100_sum$freqs$side
+die_roll100_sum$freqs$count
+die_roll100_sum$freqs$prop
+```
+
+As you might infer, the class `summary.rolls` is one object, with one name. It contains data on on the sides of the device, has the total count for each side on the device that comes up in the model, and also contains the proportion of each side relative to the total number of rolls in the model.
+
+We can further summarize the data with a plot of the rolls:
+
+```{r}
+plot(die_roll100)
+```
+
+The plot defaults to the proportion of the names on the sides of the device.
+
+Thanks for using my package!
